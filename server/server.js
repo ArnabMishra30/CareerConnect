@@ -16,7 +16,10 @@ const app = express();
 app.use(cookieParser());
 // Middleware
 app.use(cors({
-  origin: "http://localhost:5173", 
+  origin: [
+    "http://localhost:5173",                   
+    "https://career-connect-tau.vercel.app/"
+  ],
   credentials: true,
 }));
 app.use(express.json());
@@ -38,6 +41,6 @@ mongoose
   .catch((err) => console.error("MongoDB connection error: ", err));
 
 //creating a demo request in the server..
-app.get('/', (req, res)=>{
+app.get('/', (req, res) => {
   res.send("Hello Aict..")
 })
