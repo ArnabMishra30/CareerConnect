@@ -170,11 +170,12 @@ export default function EditJob() {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const API_URL = import.meta.env.VITE_BACKEND_URL;
 
     // Fetch job data
     useEffect(() => {
         axios
-            .get(`http://localhost:5000/api/jobs/${id}`, { withCredentials: true })
+            .get(`${API_URL}/api/jobs/${id}`, { withCredentials: true })
             .then((res) => {
                 setFormData({
                     ...res.data,
@@ -193,7 +194,7 @@ export default function EditJob() {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/auth/me", {
+                const res = await axios.get(`${API_URL}/api/auth/me`, {
                     withCredentials: true,
                 });
                 setUser(res.data);
@@ -220,7 +221,7 @@ export default function EditJob() {
                     .split(",")
                     .map((skill) => skill.trim()),
             };
-            await axios.put(`http://localhost:5000/api/jobs/${id}`, payload, {
+            await axios.put(`${API_URL}/api/jobs/${id}`, payload, {
                 withCredentials: true,
             });
             alert("Job updated successfully! 🎉");

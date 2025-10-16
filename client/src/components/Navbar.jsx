@@ -82,12 +82,13 @@ const NavLink = ({ to, children, icon: Icon, onClick }) => (
 export default function Navbar() {
   const [role, setRole] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         // NOTE: Ensure your backend is running at this address
-        const res = await axios.get("http://localhost:5000/api/auth/me");
+        const res = await axios.get(`${API_URL}/api/auth/me`);
         setRole(res.data.role);
       } catch (err) {
         // Silently fail if not logged in/error, the role will remain null (logged out state)
@@ -98,7 +99,7 @@ export default function Navbar() {
   }, []);
 
   const handleLogout = async () => {
-    await axios.post("http://localhost:5000/api/auth/logout");
+    await axios.post(`${API_URL}/api/auth/logout`);
     // Close mobile menu on logout
     setMenuOpen(false);
     window.location.href = "/";

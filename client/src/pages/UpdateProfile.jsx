@@ -180,15 +180,16 @@ export default function UpdateProfile() {
     const [user, setUser] = useState(null);
     const { register, handleSubmit, reset } = useForm();
     const navigate = useNavigate();
+    const API_URL = import.meta.env.VITE_BACKEND_URL;
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const meRes = await axios.get("http://localhost:5000/api/auth/me");
+                const meRes = await axios.get(`${API_URL}/api/auth/me`);
                 const userId = meRes.data.id;
                 setUser(meRes.data);
 
-                const profileRes = await axios.get(`http://localhost:5000/api/auth/user/${userId}`);
+                const profileRes = await axios.get(`${API_URL}/api/auth/user/${userId}`);
                 reset(profileRes.data);
             } catch (err) {
                 console.error("Error fetching user data:", err);
@@ -214,7 +215,7 @@ export default function UpdateProfile() {
             });
 
             await axios.put(
-                "http://localhost:5000/api/auth/update-profile",
+                `${API_URL}/api/auth/update-profile`,
                 formData,
                 {
                     headers: { "Content-Type": "multipart/form-data" },

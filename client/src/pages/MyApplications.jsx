@@ -7,10 +7,11 @@ export default function MyApplications() {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/applications/mine", {
+      .get(`${API_URL}/api/applications/mine`, {
         withCredentials: true,
       })
       .then((res) => setApplications(res.data))

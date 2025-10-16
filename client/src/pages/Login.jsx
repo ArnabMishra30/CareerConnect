@@ -87,12 +87,13 @@ export default function Login() {
     } = useForm();
     
     const navigate = useNavigate();
+    const API_URL = import.meta.env.VITE_BACKEND_URL;
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const onSubmit = async (data) => {
         setIsSubmitting(true);
         try {
-            const res = await fetch("http://localhost:5000/api/auth/login", {
+            const res = await fetch(`${API_URL}/api/auth/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include", 
@@ -102,7 +103,7 @@ export default function Login() {
             const result = await res.json();
             if (!res.ok) throw new Error(result.message);
 
-            const meRes = await fetch("http://localhost:5000/api/auth/me", {
+            const meRes = await fetch(`${API_URL}/api/auth/me`, {
                 credentials: "include",
             });
 

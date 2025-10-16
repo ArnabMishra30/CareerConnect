@@ -56,15 +56,16 @@ export default function AllJobs() {
   const [jobs, setJobs] = useState([]);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchUserAndJobs = async () => {
       setIsLoading(true);
       try {
-        const userRes = await axios.get("http://localhost:5000/api/auth/me");
+        const userRes = await axios.get(`${API_URL}/api/auth/me`);
         setUser(userRes.data);
 
-        const jobsRes = await axios.get("http://localhost:5000/api/jobs");
+        const jobsRes = await axios.get(`${API_URL}/api/jobs`);
         setJobs(jobsRes.data);
       } catch (err) {
         console.error("Error fetching user or jobs:", err);

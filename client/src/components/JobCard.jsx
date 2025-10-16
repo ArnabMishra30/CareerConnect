@@ -53,6 +53,7 @@ import { Clock, MapPin, DollarSign, Briefcase, Zap, Loader2 } from "lucide-react
 export default function JobCard({ job, role, onApplied }) {
   // 💡 NEW STATE: Track application status for loading and disabling
   const [isApplying, setIsApplying] = useState(false);
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
   // Optional: State to show application success (if not using onApplied to manage it)
   // const [isApplied, setIsApplied] = useState(false); 
 
@@ -60,7 +61,7 @@ export default function JobCard({ job, role, onApplied }) {
     setIsApplying(true); // Start loading
     try {
       const res = await axios.post(
-        `http://localhost:5000/api/applications/${job._id}`,
+        `${API_URL}/api/applications/${job._id}`,
         {},
         { withCredentials: true }
       );

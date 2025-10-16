@@ -179,12 +179,13 @@ export default function CreateJob() {
     const [user, setUser] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false); // Added for submit loading state
     const navigate = useNavigate();
+    const API_URL = import.meta.env.VITE_BACKEND_URL;
 
     // Fetch logged-in user for Navbar
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/auth/me", {
+                const res = await axios.get(`${API_URL}/api/auth/me`, {
                     withCredentials: true,
                 });
                 setUser(res.data);
@@ -212,7 +213,7 @@ export default function CreateJob() {
                     .map((skill) => skill.trim()),
             };
             
-            await axios.post("http://localhost:5000/api/jobs", payload, {
+            await axios.post(`${API_URL}/api/jobs`, payload, {
                 withCredentials: true,
             });
 

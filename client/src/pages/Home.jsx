@@ -75,11 +75,12 @@ export default function Home() {
   const [user, setUser] = useState(null);
   // 💡 NEW STATE: Introduce a loading state
   const [isLoading, setIsLoading] = useState(true); 
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/auth/me");
+        const res = await axios.get(`${API_URL}/api/auth/me`);
         setUser(res.data);
       } catch (err) {
         setUser(null);

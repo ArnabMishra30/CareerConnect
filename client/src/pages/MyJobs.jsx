@@ -142,12 +142,13 @@ export default function MyJobs() {
     const [expandedJobId, setExpandedJobId] = useState(null);
     const [applicants, setApplicants] = useState({});
     const [loadingApplicants, setLoadingApplicants] = useState({});
+    const API_URL = import.meta.env.VITE_BACKEND_URL;
 
     // Fetch logged-in user
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/auth/me");
+                const res = await axios.get(`${API_URL}/api/auth/me`);
                 setUser(res.data);
             } catch (err) {
                 console.error("Error fetching user:", err);
@@ -160,7 +161,7 @@ export default function MyJobs() {
     const fetchMyJobs = async () => {
         setLoading(true);
         try {
-            const res = await axios.get("http://localhost:5000/api/jobs/my-jobs");
+            const res = await axios.get(`${API_URL}/api/jobs/my-jobs`);
             setJobs(res.data);
         } catch (err) {
             console.error(err);
@@ -176,7 +177,7 @@ export default function MyJobs() {
     const handleDelete = async (jobId) => {
         if (!window.confirm("Are you sure you want to delete this job?")) return;
         try {
-            await axios.delete(`http://localhost:5000/api/jobs/${jobId}`);
+            await axios.delete(`${API_URL}/api/jobs/${jobId}`);
             alert("Job deleted successfully.");
             setJobs(jobs.filter((job) => job._id !== jobId));
         } catch (err) {
@@ -189,7 +190,7 @@ export default function MyJobs() {
         setLoadingApplicants((prev) => ({ ...prev, [jobId]: true }));
         try {
             const res = await axios.get(
-                `http://localhost:5000/api/applications/job/${jobId}`
+                `${API_URL}/api/applications/job/${jobId}`
             );
             setApplicants((prev) => ({
                 ...prev,
@@ -208,7 +209,7 @@ export default function MyJobs() {
     const handleStatusChange = async (applicationId, jobId, newStatus) => {
         try {
             await axios.put(
-                `http://localhost:5000/api/applications/${applicationId}/status`,
+                `${API_URL}/api/applications/${applicationId}/status`,
                 { status: newStatus }
             );
 
