@@ -65,10 +65,18 @@ const app = express();
 
 app.use(cookieParser());
 app.use(
+  // cors({
+  //   origin: [
+  //     "http://localhost:5173",
+  //     "https://career-connect-tau.vercel.app",
+  //   ],
+  //   credentials: true,
+  // })
   cors({
     origin: [
       "http://localhost:5173",
       "https://career-connect-tau.vercel.app",
+      "https://careerconnect-frontend-df0v.onrender.com", // ✅ Add this line
     ],
     credentials: true,
   })
