@@ -62,12 +62,20 @@ const loginUser = async (req, res) => {
 
         const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
+        // res.cookie("token", token, {
+        //     httpOnly: true,
+        //     secure: process.env.NODE_ENV === "production",
+        //     sameSite: "strict",
+        //     maxAge: 60 * 60 * 1000
+        // });
+
         res.cookie("token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
+            secure: true,               // Always true since Render uses HTTPS
+            sameSite: "none",           // 🔥 Allow cookies from frontend domain
             maxAge: 60 * 60 * 1000
         });
+
 
         res.status(200).json({ token });
     } catch (err) {
@@ -224,13 +232,13 @@ const updateUserProfile = async (req, res) => {
 export default updateUserProfile;
 
 const logoutUser = (req, res) => {
-  res.cookie("token", "", {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-    expires: new Date(0), //expires immediately
-  });
-  res.status(200).json({ message: "Logged out successfully" });
+    res.cookie("token", "", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        expires: new Date(0), //expires immediately
+    });
+    res.status(200).json({ message: "Logged out successfully" });
 };
 
 
