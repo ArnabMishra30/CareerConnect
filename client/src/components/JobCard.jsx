@@ -54,6 +54,7 @@ export default function JobCard({ job, role, onApplied }) {
   // 💡 NEW STATE: Track application status for loading and disabling
   const [isApplying, setIsApplying] = useState(false);
   const API_URL = import.meta.env.VITE_BACKEND_URL;
+  
   // Optional: State to show application success (if not using onApplied to manage it)
   // const [isApplied, setIsApplied] = useState(false); 
 
